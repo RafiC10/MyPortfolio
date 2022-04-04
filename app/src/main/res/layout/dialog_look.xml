@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="321dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/tvWhatToDoWithStock"
+        android:layout_width="321dp"
+        android:layout_height="wrap_content"
+        android:text="מה תרצה לעשות עם מניית - "
+        android:textSize="40dp"
+        android:textColor="#000000"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+    <Button
+        android:id="@+id/buttonUpdateInDialogLook"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:text="עדכן"
+        android:textSize="25dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="175dp" />
+
+    <Button
+        android:id="@+id/buttonDeleteInDialogLook"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:backgroundTint="#FD0000"
+        android:gravity="center"
+        android:text="מחק"
+        android:textSize="25dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="167dp" />
+
+
+</LinearLayout>

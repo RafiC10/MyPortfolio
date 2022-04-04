@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="LOOK"
+        android:id="@+id/menulook"
+        app:showAsAction="always"/>
+ <item
+     android:title="portfolio"
+     android:id="@+id/menuport"
+     app:showAsAction="always"/>
+<item
+    android:title="add"
+    android:id="@+id/menuadd"
+    app:showAsAction="always"/>
+    />
+ <item
+   android:title="statics"
+   android:id="@+id/menustatics"
+     app:showAsAction="always"/>/>
+
+</menu>
