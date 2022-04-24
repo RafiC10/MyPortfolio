@@ -15,7 +15,7 @@ public class User {
 
 
 
-    public User(ArrayList<LookingStock> toLook, ArrayList<InvestStock> toInvest, String nameUser, String gmail, int size) {
+    public User(ArrayList<LookingStock> toLook, ArrayList<InvestStock> toInvest, String nameUser, String gmail) {
         this.nameUser = nameUser;
         this.gmail = gmail;
         ToInvest = toInvest;
@@ -23,7 +23,7 @@ public class User {
 
     }
 
-    public User(String nameUser, String gmail,int size) {
+    public User(String nameUser, String gmail) {
         this.nameUser = nameUser;
         this.gmail = gmail;
 

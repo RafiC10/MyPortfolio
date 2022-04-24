@@ -44,9 +44,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnContex
     }
 
             public void giser (View v){
-
                 if (btnFinish == v&&password.getText().length()>=6) {
-
                     mAuth.createUserWithEmailAndPassword(mail.getText().toString(), password.getText().toString())
                             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -55,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnContex
                                         //
                                         FirebaseUser currentUser = mAuth.getCurrentUser();
                                         User user = new User(user_name.getText().toString(),
-                                                mail.getText().toString(),0);
+                                                mail.getText().toString());
                                         myRefToUsers.child(currentUser.getUid()).setValue(user);
                                     } else {
                                         // If sign in fails, display a message to the user.

@@ -17,7 +17,6 @@ import androidx.core.app.NotificationManagerCompat;
 public class MyService extends Service {
     public static final String CHANNEL_1_ID = "channel1";
     public static final String CHANNEL_2_ID = "channel2";
-    int count = 1 ;
     private NotificationManagerCompat notificationManager;
 
     public MyService() {
@@ -55,8 +54,7 @@ public class MyService extends Service {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
-        notificationManager.notify(count, notification);
-        count++;
+        notificationManager.notify(1, notification);
 
     }
 }

@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,10 +31,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 
@@ -43,9 +38,7 @@ public class PortActivity2 extends AppCompatActivity //implements View.OnClickLi
  {
     TextView worthOfTheStockNow,GenralChange;
      EditText nameE,priceE,amountE,comissionE;//for the dialog
-    Boolean EveryThingIsFine =false;
     Dialog dialog;
-    Double TheRealPrice = -0.2;
     double calculateWorthOfTheStockNow = 0;
     double calculateGenralChange = 0;
     FirebaseDatabase database;
@@ -61,6 +54,7 @@ public class PortActivity2 extends AppCompatActivity //implements View.OnClickLi
     String keyOfInvestStock;
     MyReceiver myReceiver;
     static Intent intent;
+
 
 
     @Override
@@ -232,7 +226,7 @@ public class PortActivity2 extends AppCompatActivity //implements View.OnClickLi
 
                 if (btntos==v&&nameE.getText().length()>0&&amountE.getText().length()>0&&priceE.getText().length()>0&&comissionE.getText().length()>0){
                 String ap = "https://financialmodelingprep.com/api/v3/quote-short/" + nameE.getText().toString() + "?apikey=d477f4211cca3f702244eaf9a9539b0d";
-                DownLoadText t = new DownLoadText();
+                    DownLoadData t = new DownLoadData(PortActivity2.this);
                 t.execute(ap.toString());
             }
                 else if (btntos == v&&(amountE.getText().length()==0||priceE.getText().length()==0||comissionE.getText().length()==0)) {
@@ -251,17 +245,17 @@ public class PortActivity2 extends AppCompatActivity //implements View.OnClickLi
         btnsa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btnsa == v&& EveryThingIsFine ==true) {
+                if (btnsa == v&& DownLoadData.EveryThingIsFine ==true) {
                 deleteansupdae1();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 MyRefToStocks = database.getReference("ToInvest").child(currentUser.getUid()).push();
                 InvestStock investStock = new InvestStock(nameE.getText().toString(), Double.valueOf(priceE.getText().toString()), Double.valueOf(amountE.getText().toString()), Double.valueOf(comissionE.getText().toString()),
-                        TheRealPrice, (double) (Double.valueOf(amountE.getText().toString()) * TheRealPrice), MyRefToStocks.getKey());
+                        DownLoadData.TheRealPrice, (double) (Double.valueOf(amountE.getText().toString()) * DownLoadData.TheRealPrice), MyRefToStocks.getKey());
                 MyRefToStocks.setValue(investStock);
                 startActivity(new Intent(PortActivity2.this, PortActivity2.class));
 
             }
-                if (btnsa == v&& EveryThingIsFine !=true) {
+                if (btnsa == v&& DownLoadData.EveryThingIsFine !=true) {
                     Toast.makeText(PortActivity2.this, "אתה צריך ללחוץ על בדיקת נתונים", Toast.LENGTH_LONG).show();
 
                 }}
@@ -273,56 +267,56 @@ public class PortActivity2 extends AppCompatActivity //implements View.OnClickLi
         refToDelete.removeValue();
 
     }
-     class DownLoadText extends AsyncTask<String, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            // TODO Auto-generated method stub
-            String line = "";
-            HttpURLConnection urlConnection = null;
-            URL url = null;
-            try {
-                URL myURL = new URL(params[0]);
-                URLConnection ucon = myURL.openConnection();
-                InputStream in = ucon.getInputStream();
-                byte[] buffer = new byte[4096];
-                in.read(buffer);
-                line = new String(buffer);
-            } catch (Exception e) {
-                line = e.getMessage();
-            }
-            return line;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            // TODO Auto-generated method stub
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            String s = result;
-            String[] parts = s.split("volume");
-            s = parts[0];
-            s = s.replaceAll("[^\\d.]", "");
-            if (!s.isEmpty()){
-                TheRealPrice = Double.valueOf(s);
-                EveryThingIsFine =true;
-                Toast.makeText(PortActivity2.this, "עכשיו אתה יכול ללחוץ לחץ לעידכון" , Toast.LENGTH_LONG).show();
-            }
-            else  {
-                Toast.makeText(PortActivity2.this, "שם מנייה לא נכון", Toast.LENGTH_LONG).show();
-            }
-
-        }
-
-    }
+//     class DownLoadText extends AsyncTask<String, Integer, String> {
+//        @Override
+//        protected void onPreExecute() {
+//
+//            super.onPreExecute();
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//            // TODO Auto-generated method stub
+//            String line = "";
+//            HttpURLConnection urlConnection = null;
+//            URL url = null;
+//            try {
+//                URL myURL = new URL(params[0]);
+//                URLConnection ucon = myURL.openConnection();
+//                InputStream in = ucon.getInputStream();
+//                byte[] buffer = new byte[4096];
+//                in.read(buffer);
+//                line = new String(buffer);
+//            } catch (Exception e) {
+//                line = e.getMessage();
+//            }
+//            return line;
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Integer... values) {
+//            // TODO Auto-generated method stub
+//            super.onProgressUpdate(values);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // TODO Auto-generated method stub
+//            super.onPostExecute(result);
+//            String s = result;
+//            String[] parts = s.split("volume");
+//            s = parts[0];
+//            s = s.replaceAll("[^\\d.]", "");
+//            if (!s.isEmpty()){
+//                TheRealPrice = Double.valueOf(s);
+//                EveryThingIsFine =true;
+//                Toast.makeText(PortActivity2.this, "עכשיו אתה יכול ללחוץ לחץ לעידכון" , Toast.LENGTH_LONG).show();
+//            }
+//            else  {
+//                Toast.makeText(PortActivity2.this, "שם מנייה לא נכון", Toast.LENGTH_LONG).show();
+//            }
+//
+//        }
+//
+//    }
 }

@@ -4,9 +4,7 @@ package com.example.myapplication;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,10 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class LookActivity extends AppCompatActivity implements View.OnClickListener {
@@ -45,8 +39,6 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
     RecyclerView recyclerViewOfLook;
     LookingStocksAdapter lookingStocksAdapter;
     Button btnCheckDataInLook, btnAddToPortfolioInLook;
-    Double TheRealPrice = -0.2 ;
-    Boolean EveryThingIsFine =false;
     EditText nameOfStock;
     String keyOfLookStock;
     static String nameForService;
@@ -70,8 +62,6 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
         myReflookStock = database.getReference("ToLook");
         firebaseUser = mAuth.getCurrentUser();
-//        readFromDataStock1();
-        readFromData();
         readFromDataStock();
 
 
@@ -83,7 +73,7 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
                 keyOfLookStock = userItem.getKey();
                 createInfromationDialog(look, poisition);
                 String ap = "https://financialmodelingprep.com/api/v3/quote-short/" + userItem.getName().toString() + "?apikey=d477f4211cca3f702244eaf9a9539b0d";
-                DownLoadText t = new DownLoadText();
+                DownLoadData t = new DownLoadData(LookActivity.this);
                 t.execute(ap.toString());
             }
         };
@@ -115,24 +105,24 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void readFromData() {
-        FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        MyRefToUsers.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });
-    }
+//    private void readFromData() {
+//        FirebaseAuth mAuth;
+//        mAuth = FirebaseAuth.getInstance();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        MyRefToUsers.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                User user = dataSnapshot.getValue(User.class);
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//            }
+//        });
+//    }
 
     private void readFromDataStock() {
         FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
+         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         myReflookStock.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -174,77 +164,76 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (btnCheckDataInLook == view&&nameOfStock.getText().length()>0) {
             String ap = "https://financialmodelingprep.com/api/v3/quote-short/" + nameOfStock.getText().toString() + "?apikey=d477f4211cca3f702244eaf9a9539b0d";
-            DownLoadText t = new DownLoadText();
+            DownLoadData t = new DownLoadData(LookActivity.this);
             t.execute(ap.toString());
-           }
-
-        if (btnAddToPortfolioInLook == view && EveryThingIsFine == true) {
+        }
+        if (btnAddToPortfolioInLook == view && DownLoadData.EveryThingIsFine == true) {
             FirebaseUser currentUser = mAuth.getCurrentUser();
             myReflookStock = database.getReference("ToLook").child(currentUser.getUid()).push();
-            LookingStock lookingStock = new LookingStock(nameOfStock.getText().toString(), TheRealPrice, myReflookStock.getKey());
-            priceForService = TheRealPrice;
+            LookingStock lookingStock = new LookingStock(nameOfStock.getText().toString(), DownLoadData.TheRealPrice, myReflookStock.getKey());
+            priceForService = DownLoadData.TheRealPrice;
             nameForService = nameOfStock.getText().toString();
             myReflookStock.setValue(lookingStock);
             startService(new Intent(this,MyService.class));
             Intent intent = new Intent(LookActivity.this, LookActivity.class);
             startActivity(intent);
         }
-        if (btnAddToPortfolioInLook == view && EveryThingIsFine != true) {
+        if (btnAddToPortfolioInLook == view && DownLoadData.EveryThingIsFine != true) {
             Toast.makeText(LookActivity.this, "אתה צריך ללחוץ על בדיקת נתונים", Toast.LENGTH_LONG).show();
 
         }
 
     }
 
-    class DownLoadText extends AsyncTask<String, Integer, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-        @Override
-        protected String doInBackground(String... params) {
-            // TODO Auto-generated method stub
-            String line = "";
-            HttpURLConnection urlConnection = null;
-            URL url = null;
-            try {
-                URL myURL = new URL(params[0]);
-                URLConnection ucon = myURL.openConnection();
-                InputStream in = ucon.getInputStream();
-                byte[] buffer = new byte[4096];
-                in.read(buffer);
-                line = new String(buffer);
-            } catch (Exception e) {
-                line = e.getMessage();
-            }
-            return line;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            // TODO Auto-generated method stub
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            String s = result;
-            String[]parts=s.split("volume");
-            s=parts[0];
-            s = s.replaceAll("[^\\d.]", "");
-            if (!s.isEmpty()&&Double.valueOf(s)!=0.34774){
-                TheRealPrice = Double.valueOf(s);
-                EveryThingIsFine =true;
-                Toast.makeText(LookActivity.this, "עכשיו אתה יכול ללחוץ על הוספה/עדכן" , Toast.LENGTH_LONG).show();
-            }
-            else {
-                Toast.makeText(LookActivity.this, "שם מנייה לא נכון", Toast.LENGTH_LONG).show();
-            }
-        }
-
-    }
+//    class DownLoadText extends AsyncTask<String, Integer, String> {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//        }
+//        @Override
+//        protected String doInBackground(String... params) {
+//            // TODO Auto-generated method stub
+//            String line = "";
+//            HttpURLConnection urlConnection = null;
+//            URL url = null;
+//            try {
+//                URL myURL = new URL(params[0]);
+//                URLConnection ucon = myURL.openConnection();
+//                InputStream in = ucon.getInputStream();
+//                byte[] buffer = new byte[4096];
+//                in.read(buffer);
+//                line = new String(buffer);
+//            } catch (Exception e) {
+//                line = e.getMessage();
+//            }
+//            return line;
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Integer... values) {
+//            // TODO Auto-generated method stub
+//            super.onProgressUpdate(values);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            // TODO Auto-generated method stub
+//            super.onPostExecute(result);
+//            String s = result;
+//            String[]parts=s.split("volume");
+//            s=parts[0];
+//            s = s.replaceAll("[^\\d.]", "");
+//            if (!s.isEmpty()&&Double.valueOf(s)!=0.34774){
+//                TheRealPrice = Double.valueOf(s);
+//                EveryThingIsFine =true;
+//                Toast.makeText(LookActivity.this, "עכשיו אתה יכול ללחוץ על הוספה/עדכן" , Toast.LENGTH_LONG).show();
+//            }
+//            else {
+//                Toast.makeText(LookActivity.this, "שם מנייה לא נכון", Toast.LENGTH_LONG).show();
+//            }
+//        }
+//
+//    }
     public void createInfromationDialog(ArrayList<LookingStock> look, int poisition) {
         LookingStock userItem = look.get(poisition);
         keyOfLookStock = userItem.getKey();
@@ -272,12 +261,12 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
 
-                if (btnUpdate==v&& EveryThingIsFine ==true){
+                if (btnUpdate==v&& DownLoadData.EveryThingIsFine ==true){
                     refToDelete = FirebaseDatabase.getInstance().getReference("ToLook").child(firebaseUser.getUid()).child(String.valueOf(keyOfLookStock));
                     refToDelete.removeValue();
                     FirebaseUser currentUser = mAuth.getCurrentUser();
                     myReflookStock = database.getReference("ToLook").child(currentUser.getUid()).push();
-                    LookingStock lookingStock = new LookingStock(nameOfLook.toString(),TheRealPrice, myReflookStock.getKey());
+                    LookingStock lookingStock = new LookingStock(nameOfLook.toString(),DownLoadData.TheRealPrice, myReflookStock.getKey());
                     myReflookStock.setValue(lookingStock);
                     startActivity(new Intent(LookActivity.this, LookActivity.class));
                     Toast.makeText(LookActivity.this, "עודכן בהצלחה!", Toast.LENGTH_SHORT).show();

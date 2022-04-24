@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnContextCli
     EditText EtPassworldInMain;
     Button btnConInMain;
     Button btnDontInMain;
-    private FirebaseDatabase database;
-    private DatabaseReference MyRefToUsers;
+    //private FirebaseDatabase database;
+    //private DatabaseReference MyRefToUsers;
     private FirebaseAuth mAuth;
 
 
@@ -40,9 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnContextCli
         btnDontInMain = (Button) findViewById(R.id.btnd);
         btnConInMain.setOnContextClickListener(this);
         mAuth = FirebaseAuth.getInstance();
-
-        database = FirebaseDatabase.getInstance();
-        MyRefToUsers = database.getReference("Users");
+      //  database = FirebaseDatabase.getInstance();
+        //MyRefToUsers = database.getReference("Users");
     }
 
     public void ON(View v) {
