@@ -79,7 +79,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_margin="0sp"
-        android:hint=" בדיקת נתונים "
+        android:text=" בדיקת נתונים "
         android:textSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

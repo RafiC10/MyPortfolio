@@ -54,7 +54,6 @@
         android:background="#FFEB3B"
         android:text="ChangeGenral"
         android:padding="10sp"
-        android:textColor="#14DF05"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

@@ -1,16 +1,17 @@
 package com.example.myapplication;
 
-public class LookingStock {
-
-    protected String name;
-    protected double priceNow;
-    private String key;
+public class LookingStock
+{//עצם מסוג מנייה לצפייה הכולל שם,מחיר נוכחי,Key
+    protected String name;//שם מנייה
+    protected double priceNow;//מחיר מנייה נוכחי
+    protected String key;//key in database
 
 
     public LookingStock() {
     }
 
     public LookingStock(String name, double priceNow, String key) {
+        //בנאי
         this.name = name;
         this.priceNow = priceNow;
         this.key=key;

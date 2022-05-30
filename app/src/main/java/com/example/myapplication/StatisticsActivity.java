@@ -28,12 +28,10 @@ import com.github.mikephil.charting.charts.PieChart;
 import java.util.ArrayList;
 
 public class StatisticsActivity extends AppCompatActivity {
-    private PieChart pieChart;
-    FirebaseDatabase database;
-    int totalOfStocksNow =0;
-    int totalOfStockThen = 0;
-    DatabaseReference myRef,myRefStock;
-    ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
+    PieChart pieChart;//גרף העוגה עצמו
+    int totalOfStocksNow =0;//שווי מניות נוכחי
+    DatabaseReference myRefStockInvest;//הפניות לדאטה בייס על מנת לייבא משם את נתוני המניות לתוך הגרף
+    ArrayList<PieEntry> entries = new ArrayList<>();//יArrayList של המניות בצורה שיהיה ניתן להשיג בגרף העוגה
 
 
     @Override
@@ -41,28 +39,21 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         pieChart = findViewById(R.id.graphInStatisc);
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Users");
-        myRefStock = database.getReference("ToInvest");
+        myRefStockInvest = FirebaseDatabase.getInstance().getReference("ToInvest");
         readFromDataStock();
     }
-    private void readFromDataStock() {
-        FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        myRefStock.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+    private void readFromDataStock() {//פעולה אשר קוראת הנתונים מהדאטה בייס ומציבה אותם ב entries וחישוב שווי המניות הנוכחי
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        myRefStockInvest.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
                     InvestStock investStock = ds.getValue(InvestStock.class);
-
                     entries.add(new PieEntry((float) (investStock.getTotalWorthOfStock()), investStock.getName()));
-                    totalOfStocksNow +=(investStock.priceNow *investStock.getAmount());
-                    totalOfStockThen += (investStock.getBuyingPrice() * investStock.getAmount());
+                    totalOfStocksNow +=(investStock.getTotalWorthOfStock());
                 }
-                setupPieChart();
                 loadPieChartData();
+
             }
             @Override
             public void onCancelled(DatabaseError error) {
@@ -70,66 +61,51 @@ public class StatisticsActivity extends AppCompatActivity {
         });
     }
 
-    private void loadPieChartData() {
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        for (int color: ColorTemplate.MATERIAL_COLORS) {
-            colors.add(color);
-        }
-
-        for (int color: ColorTemplate.VORDIPLOM_COLORS) {
-            colors.add(color);
-        }
-
-        PieDataSet dataSet = new PieDataSet(entries ,  "");
-        dataSet.setColors(colors);
-        dataSet.setValueTextSize(45);
-        PieData data = new PieData(dataSet);
-        data.setDrawValues(true);
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(25);
-        data.setValueTextColor(Color.BLACK);
-
-        pieChart.setData(data);
-        pieChart.invalidate();
-
-    }
-    private void setupPieChart() {
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setUsePercentValues(true);
-        pieChart.setEntryLabelTextSize(0);
-        pieChart.setEntryLabelColor(Color.BLACK);
-        pieChart.setCenterText("All of the stocks : " + totalOfStocksNow +"$" );
-        pieChart.setCenterTextSize(25);
-        pieChart.getDescription().setEnabled(false);
-
-        Legend l = pieChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+    private void loadPieChartData() {//בניית גרף העוגה עצמו וכל הנתנוים מסביב ועיצובם
+        Legend l = pieChart.getLegend();//הנתנוים למעלה (שמות המניות)
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);//מיקומם
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setTextSize(60);
         l.setDrawInside(true);
         l.setEnabled(true);
 
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        for (int color: ColorTemplate.MATERIAL_COLORS) {//צבעים עבור הגרף
+            colors.add(color);
+        }
+        PieDataSet dataSet = new PieDataSet(entries ,  "");
+        dataSet.setColors(colors);
+        dataSet.setValueTextSize(85);
+        PieData data = new PieData(dataSet);//נתוני המניות (האחוזים)
+        data.setDrawValues(true);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(25);
+        data.setValueTextColor(Color.BLACK);
+
+        pieChart.setData(data);//בניית הגרף עצמו והבאת נתונים אליו
+        pieChart.invalidate();
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setUsePercentValues(true);
+        pieChart.setEntryLabelTextSize(0);
+        pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setCenterText("All of the stocks   " + totalOfStocksNow +"$" );//הכיתוב באמצע
+        pieChart.setCenterTextSize(26);
+        pieChart.getDescription().setEnabled(false);
     }
-
-
-
-
-
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {//הצגת ה menu
         getMenuInflater().inflate(R.menu.menu1,menu);
 
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {//מעביר מסכים לפי ה menu
         if (item.getItemId() == R.id.menuport)
         {
-            startActivity(new Intent(StatisticsActivity.this, PortActivity2.class));
+            startActivity(new Intent(StatisticsActivity.this, PortfolioActivity.class));
         }
         if (item.getItemId() == R.id.menuadd)
         {

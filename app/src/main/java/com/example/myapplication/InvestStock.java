@@ -1,14 +1,16 @@
 package com.example.myapplication;
 
-//לעשות הורשה על ידי הוספת מנניה שהיא רק לצפייה ובניית 2 תיקים אחד לרשימות צפייה ואחד לקניית מניות ממש
-public class InvestStock extends LookingStock{
 
-    private double buyingPrice;
-    private double comission;
-    private double amount;
-    private double TotalWorthOfStock;
+public class InvestStock extends LookingStock
+{//עצם מסוג מנייה להשקעה אשר יורשת ממנייה לצפייה ומופיסה גם מחיר קנייה,עמלה,כמות מניות,שווי מנייה כולל
+
+    private double buyingPrice;//מחיר קניייה
+    private double comission;//עמלה
+    private double amount;//כמות מניות שנקנו
+        private double TotalWorthOfStock;//שווי כולל של המניות (מחיר נוכחי כפול כמות מניות)
 
     public InvestStock(String name, double buyingPrice, double amount, double comission, double pricenow, double TotalWorthOfStock, String key) {
+        //בנאי לעצם
         super(name, pricenow,key);
         this.buyingPrice = buyingPrice;
         this.comission = comission;

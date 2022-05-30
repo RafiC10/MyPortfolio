@@ -5,7 +5,7 @@
     android:id="@+id/activityport"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PortActivity2"
+    tools:context=".PortfolioActivity"
     android:background="@drawable/greengraf"
     android:backgroundTint="#446178"
     android:backgroundTintMode="add"

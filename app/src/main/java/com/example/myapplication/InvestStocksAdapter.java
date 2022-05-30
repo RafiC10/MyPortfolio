@@ -12,30 +12,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class InvestStocksAdapter extends RecyclerView.Adapter<InvestStocksAdapter.InvestLookViewHolder> {
-    private ArrayList<InvestStock>invest;
-    private View.OnClickListener onItemClickListener;
-
+    //בנייה וסידור של ה RecyclerView של מניות להשקעה בדף החשבון
+    private ArrayList<InvestStock>invest;//מערך המניות להשקעה של המשתמש
+    private View.OnClickListener onItemClickListener;//ליסינר ללחיצה על מנת שיהיה ניתן לפתוח דיאלוג מידע
     public InvestStocksAdapter(ArrayList<InvestStock> invest){
         this.invest = invest;
-
-    }
-
+    }//גודל
+    public void setOnItemClickListener(View.OnClickListener onItemClickListener) { this.onItemClickListener =onItemClickListener ; }
+    public int getItemCount() { return invest.size(); }
     @NonNull
     @Override
     public InvestLookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //יצירת ViewHolder
         View lookView = LayoutInflater.from(parent.getContext()).inflate
                 (R.layout.ecycletocks,parent,false);
         return new InvestLookViewHolder((lookView));
     }
-
-    public void setOnItemClickListener(View.OnClickListener onItemClickListener) {
-        this.onItemClickListener =onItemClickListener ;
-    }
-
     @Override
     public void onBindViewHolder(@NonNull InvestLookViewHolder holder, int position) {
+        //הצבת הנתונים של המניות במקום התאים להם ושינוי צבע לפי הגדרה האם הם עלוו או ידרו
         InvestStock currentStock = invest.get(position);
-        holder.NameStock.setText( currentStock.getName());
+        holder.NameStock.setText(currentStock.getName());
         holder.PriceNowStock.setText(String.valueOf(currentStock.getPriceNow()));
         holder.GenerallyChngeStock.setText(String.valueOf( (int) (((currentStock.getPriceNow()/currentStock.getBuyingPrice())-1)*100)) + "%");
         if ( (int) (((currentStock.getPriceNow()/currentStock.getBuyingPrice())-1)*100)>0){
@@ -44,19 +41,13 @@ public class InvestStocksAdapter extends RecyclerView.Adapter<InvestStocksAdapte
         else {
             holder.GenerallyChngeStock.setTextColor(Color.parseColor("#CA0314"));
         }
-
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return invest.size();
     }
 
     public class InvestLookViewHolder extends RecyclerView.ViewHolder{
-        public TextView NameStock;
-        public TextView PriceNowStock;
-        public TextView GenerallyChngeStock;
+        //הגדרת הנתונים של ה RecyclerView ואפשרות ללחיצה עליהם
+            public TextView NameStock;//שם מנייה
+        public TextView PriceNowStock;//שווי מניה נוכחי
+        public TextView GenerallyChngeStock;//שינוי כללי
         public InvestLookViewHolder(@NonNull View itemView) {
             super(itemView);
             NameStock=itemView.findViewById(R.id.TvNameStockInRecycler);
@@ -66,10 +57,4 @@ public class InvestStocksAdapter extends RecyclerView.Adapter<InvestStocksAdapte
             itemView.setOnClickListener(onItemClickListener);
         }
     }
-
-
-
-
-
-
 }

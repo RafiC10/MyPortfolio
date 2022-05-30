@@ -15,9 +15,10 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 public class MyService extends Service {
-    public static final String CHANNEL_1_ID = "channel1";
-    public static final String CHANNEL_2_ID = "channel2";
-    private NotificationManagerCompat notificationManager;
+    //שולח Notification למשתמש בכל פעם שהוא מוסיף מנייה לצפייה
+    //בNotification יהיה שם המנייה ומחירה הנוכחי על מנת לחסוך לו את החיפוש
+    public static final String CHANNEL_1_ID = "channel1";//שם הערוץ בו נשלחים ההתראות מסוג זה
+    private NotificationManagerCompat notificationManager;//Notificationאחראי על שליחת ה
 
     public MyService() {
     }
@@ -36,6 +37,8 @@ public class MyService extends Service {
     }
 
     private void createNotificationChannels() {
+        //פעולה אשר מעצבת את הNotification ואומרת לו להישלח דרךChannel 1
+        // וגם מוסיפה תיאור ל Channel 1 על מנת שיהיה כתוב למשתמש מה הערוץ הזה שולח
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_1_ID,

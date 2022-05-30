@@ -18,15 +18,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnContextClickListener {
-
-    Button btnFinish;
-    EditText user_name;
-    EditText mail;
-    EditText password;
-    private FirebaseDatabase database;
-    private DatabaseReference myRefToUsers;
-    private FirebaseAuth mAuth;
+public class RegisterActivity extends AppCompatActivity
+{//מחלקת מסך אשר אחרית על רישום משתמשים חדשים לאפליקציה
+    EditText user_name;// תיבת טקסט בה היוזר יוצר שם משתמש
+    EditText mail;//תיבת טקסט בה היוזר מכניס מייל
+    EditText password;//תיבת טקסט בה היוזר יוצר סיסמה
+    Button btnFinish;//כפתור סיום אחרי מילוי הפרטים
+    private DatabaseReference myRefToUsers;//הפנייה לדאטה בייס בסיסי של יוזרים על מנת ליצור משתמש חדש
+    private FirebaseAuth mAuth;//  ניהול יוזרים (הרשמה התחברות) על מנת ליצור משתמש חדש
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -36,46 +35,39 @@ public class RegisterActivity extends AppCompatActivity implements View.OnContex
             mail=findViewById(R.id.etMailInRegister);
             password = findViewById(R.id.etPassInRegister);
             btnFinish = (Button)findViewById(R.id.btnRegister);
-            btnFinish.setOnContextClickListener(this);
-            database = FirebaseDatabase.getInstance();
-            myRefToUsers = database.getReference("Users");
+            myRefToUsers = FirebaseDatabase.getInstance().getReference("Users");
             mAuth = FirebaseAuth.getInstance();
-
     }
-
-            public void giser (View v){
-                if (btnFinish == v&&password.getText().length()>=6) {
+            public void giser (View v){//הגבה לכפתור סיום אחרי מילוי הפרטים במידה והכל נכון ותיקני יווצר מתשמש חדש והוא יועבר למסך חשבון
+                if (btnFinish == v&&password.getText().length()>=6) {//בדיקת שהנתנונים מתאימים
                     mAuth.createUserWithEmailAndPassword(mail.getText().toString(), password.getText().toString())
-                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {//בדיקה ויצירה של משתמש חדש
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        //
+                                        //אם הכל עבד יוצר מתשמש חדש
                                         FirebaseUser currentUser = mAuth.getCurrentUser();
                                         User user = new User(user_name.getText().toString(),
-                                                mail.getText().toString());
+                                                mail.getText().toString(),password.getText().toString());
                                         myRefToUsers.child(currentUser.getUid()).setValue(user);
+                                        Intent intent = new Intent(RegisterActivity.this, PortfolioActivity.class);
+                                        startActivity(intent);
                                     } else {
-                                        // If sign in fails, display a message to the user.
+                                        //אם לא עבד
                                         Toast.makeText(RegisterActivity.this, "הרשמה נכשלה",
                                                 Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
                             });
-                    Intent intent = new Intent(this, PortActivity2.class);
-                    startActivity(intent);
 
                 }
-                else {
+                else {//במידה והססימה לא 6 תווים
                 Toast.makeText(RegisterActivity.this, "הרשמה נכשלה",
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, RegisterActivity.class);
                 startActivity(intent);
 
     }
-    }
-        public boolean onContextClick(View view) {
-            return false;
     }
 }

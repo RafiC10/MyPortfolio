@@ -38,7 +38,7 @@
             android:name=".AddActivity"
             android:exported="true" />
         <activity
-            android:name=".PortActivity2"
+            android:name=".PortfolioActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

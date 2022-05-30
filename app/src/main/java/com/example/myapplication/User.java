@@ -5,27 +5,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class User {
-    private String nameUser;
-    private String gmail;
-    private ArrayList<InvestStock> ToInvest;
-    private ArrayList<LookingStock>toLook;
-
-    public User() {
-    }
+    //עצם מסוג יוזר אשר יש לו שם שם, כתובת מייל,ArrayList של מניות לצפייה ושל מניות להשקעה
+    private String nameUser;//שם של משתמש
+    private String gmail;//כתובת מייל
+    private String password;//סיסמה
 
 
 
-    public User(ArrayList<LookingStock> toLook, ArrayList<InvestStock> toInvest, String nameUser, String gmail) {
+    public User(String nameUser, String gmail, String password) {
+        //בנאי
         this.nameUser = nameUser;
         this.gmail = gmail;
-        ToInvest = toInvest;
-        toLook = toLook;
-
-    }
-
-    public User(String nameUser, String gmail) {
-        this.nameUser = nameUser;
-        this.gmail = gmail;
+        this.password=password;
 
     }
 
@@ -44,21 +35,12 @@ public class User {
     public void setGmail(String gmail) {
         this.gmail = gmail;
     }
-
-    public ArrayList<InvestStock> getToInvest() {
-        return ToInvest;
+    public String getPassword() {
+        return password;
     }
 
-    public void setToInvest(ArrayList<InvestStock> toInvest) {
-        ToInvest = toInvest;
-    }
-
-    public ArrayList<LookingStock> getToLook() {
-        return toLook;
-    }
-
-    public void setToLook(ArrayList<LookingStock> toLook) {
-        this.toLook = toLook;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
