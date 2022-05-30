@@ -40,7 +40,7 @@ public class PortfolioActivity extends AppCompatActivity implements FirebaseCall
     //מחלקת מסך אשר אחרית על דף המניות להשקעה של היוזר והצגת המניות להשקעה,שווי התיק ושינוי כללי של התיק
     static TextView worthOfTheStockNow, GenralChange;//נתוני שווי תיק נוכחי ושיוני כללי של התיק
     EditText nameE, priceE, amountE, comissionE;//נתונים בשביל הדיאלוג
-    Dialog dialog;//הדיאלוג של הימדע של המנייה
+    Dialog dialog;//הדיאלוג של המידע של המנייה
     OnClickListener onItemClickListener;//ליסינר ללחיצה
     ArrayList<InvestStock> invest = new ArrayList<>();//יArrayList שבו נשמרים המניות להשקעה של המשתמש
     RecyclerView recyclerViewOfInvest;//יRecyclerView שבו יוצגו המניות להשקעה
