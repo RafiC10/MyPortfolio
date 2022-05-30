@@ -14,12 +14,21 @@ import android.view.View;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+/**
+ * The type My service.
+ */
 public class MyService extends Service {
-    //שולח Notification למשתמש בכל פעם שהוא מוסיף מנייה לצפייה
+    /**
+     * The constant CHANNEL_1_ID.
+     */
+//שולח Notification למשתמש בכל פעם שהוא מוסיף מנייה לצפייה
     //בNotification יהיה שם המנייה ומחירה הנוכחי על מנת לחסוך לו את החיפוש
     public static final String CHANNEL_1_ID = "channel1";//שם הערוץ בו נשלחים ההתראות מסוג זה
     private NotificationManagerCompat notificationManager;//Notificationאחראי על שליחת ה
 
+    /**
+     * Instantiates a new My service.
+     */
     public MyService() {
     }
 

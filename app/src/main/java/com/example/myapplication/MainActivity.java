@@ -18,14 +18,60 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+/**
+ * The type Main activity.
+ */
 /*מחלקת מסך אשר דרכה היוזר מתחבר לחשבונו או לחילופין עובר למסך הרישום במידה ואין לו חשבון*/
 public class MainActivity extends AppCompatActivity
 {//מחלקת מסך אשר דרכה היוזר מתחבר לחשבונו או לחילופין עובר למסך הרישום במידה ואין לו חשבון
+    /**
+     * The Et mail in main.
+     */
     EditText EtMailInMain;//תיבת טקסט בה היוזר מכניס מייל
+    /**
+     * The Et passworld in main.
+     */
     EditText EtPassworldInMain;//תיבת טקסט בה היוזר מכניס סיסמה
+    /**
+     * The Btn con in main.
+     */
     Button btnConInMain;//כפתור על מנת להמשיך אחרי מיולי הפרטים
+    /**
+     * The Btn dont in main.
+     */
     Button btnDontInMain;//בפתור לרישום במידה ואין חשבון מעביר ל register activity
-    ImageView imageView1,imageView2,imageView3,imageView4,imageView5,imageView6,imageView7,imageView8,imageView9,imageView10;
+    /**
+     * The Image view 1.
+     */
+    ImageView imageView1, /**
+ * The Image view 2.
+ */
+imageView2, /**
+ * The Image view 3.
+ */
+imageView3, /**
+ * The Image view 4.
+ */
+imageView4, /**
+ * The Image view 5.
+ */
+imageView5, /**
+ * The Image view 6.
+ */
+imageView6, /**
+ * The Image view 7.
+ */
+imageView7, /**
+ * The Image view 8.
+ */
+imageView8, /**
+ * The Image view 9.
+ */
+imageView9, /**
+ * The Image view 10.
+ */
+imageView10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +102,12 @@ public class MainActivity extends AppCompatActivity
         btnConInMain = (Button) findViewById(R.id.btnOk);
         btnDontInMain = (Button) findViewById(R.id.btnd);
     }
+
+    /**
+     * On.
+     *
+     * @param v the v
+     */
     public void ON(View v) {//תגובה ללחיצה על כפתור המשך במידה וכל נכון יועבר למסך החשבון אם לא יקבל על כך התראה
         if (btnConInMain == v&& EtPassworldInMain.getText().toString().length()>=6) {//לפני שאני בודק אם הנתונים בכלל נכונים בודק שהם הגיונים
             FirebaseAuth.getInstance().signInWithEmailAndPassword(EtMailInMain.getText().toString(), EtPassworldInMain.getText().toString())
@@ -97,6 +149,11 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /**
+     * On 1.
+     *
+     * @param v the v
+     */
     public void ON1(View v) {// תגובה ללחציה במידה ולחץ על כפתור אין חשבון יועבר למסך רישום
         if (btnDontInMain == v) {
             Intent intent = new Intent(this, RegisterActivity.class);

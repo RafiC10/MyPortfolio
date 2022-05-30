@@ -27,10 +27,25 @@ import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.ArrayList;
 
+/**
+ * The type Statistics activity.
+ */
 public class StatisticsActivity extends AppCompatActivity {
+    /**
+     * The Pie chart.
+     */
     PieChart pieChart;//גרף העוגה עצמו
+    /**
+     * The Total of stocks now.
+     */
     int totalOfStocksNow =0;//שווי מניות נוכחי
+    /**
+     * The My ref stock invest.
+     */
     DatabaseReference myRefStockInvest;//הפניות לדאטה בייס על מנת לייבא משם את נתוני המניות לתוך הגרף
+    /**
+     * The Entries.
+     */
     ArrayList<PieEntry> entries = new ArrayList<>();//יArrayList של המניות בצורה שיהיה ניתן להשיג בגרף העוגה
 
 

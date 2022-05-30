@@ -36,20 +36,74 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
+/**
+ * The type Portfolio activity.
+ */
 public class PortfolioActivity extends AppCompatActivity implements FirebaseCallback {
-    //מחלקת מסך אשר אחרית על דף המניות להשקעה של היוזר והצגת המניות להשקעה,שווי התיק ושינוי כללי של התיק
-    static TextView worthOfTheStockNow, GenralChange;//נתוני שווי תיק נוכחי ושיוני כללי של התיק
-    EditText nameE, priceE, amountE, comissionE;//נתונים בשביל הדיאלוג
+    /**
+     * The constant worthOfTheStockNow.
+     */
+//מחלקת מסך אשר אחרית על דף המניות להשקעה של היוזר והצגת המניות להשקעה,שווי התיק ושינוי כללי של התיק
+    static TextView worthOfTheStockNow, /**
+     * The Genral change.
+     */
+    GenralChange;//נתוני שווי תיק נוכחי ושיוני כללי של התיק
+    /**
+     * The Name e.
+     */
+    EditText nameE, /**
+     * The Price e.
+     */
+    priceE, /**
+     * The Amount e.
+     */
+    amountE, /**
+     * The Comission e.
+     */
+    comissionE;//נתונים בשביל הדיאלוג
+    /**
+     * The Dialog.
+     */
     Dialog dialog;//הדיאלוג של המידע של המנייה
+    /**
+     * The On item click listener.
+     */
     OnClickListener onItemClickListener;//ליסינר ללחיצה
+    /**
+     * The Invest.
+     */
     ArrayList<InvestStock> invest = new ArrayList<>();//יArrayList שבו נשמרים המניות להשקעה של המשתמש
+    /**
+     * The Recycler view of invest.
+     */
     RecyclerView recyclerViewOfInvest;//יRecyclerView שבו יוצגו המניות להשקעה
+    /**
+     * The Invest stocks adapter.
+     */
     InvestStocksAdapter investStocksAdapter;//יAdapter לRecyclerView
+    /**
+     * The Wifi switch.
+     */
     static Switch wifiSwitch;//כפתור סוויץ' שבעזרתו מכבה ומדליק וייפי
+    /**
+     * The Wifimanager.
+     */
     static WifiManager wifimanager;//יWifiManager על מנת שיהיה אפשר לכבות ולהדליק וייפי
+    /**
+     * The Key of invest stock.
+     */
     String keyOfInvestStock;//סטרינג של מנייה של מנייה שאני לוחץ עליה על מנת שיהיה אפשר למחוק אותה
+    /**
+     * The My receiver.
+     */
     MyReceiver myReceiver;//יReceiver שמכבה ומדליק את הוייפי ושולח על כך התראה
+    /**
+     * The Intent.
+     */
     static Intent intent;//יIntent שמעובר לService עם מצב האינטרנרט
+    /**
+     * The Firebase controller.
+     */
     FirebaseController firebaseController;//הפנייה לfirebaseController על מנת להשיג את הנתונים מהדאטהבייס
 
 
@@ -122,6 +176,12 @@ public class PortfolioActivity extends AppCompatActivity implements FirebaseCall
             startActivity(new Intent(PortfolioActivity.this, LookActivity.class)); }
         return true; }
 
+    /**
+     * Create infromation dialog.
+     *
+     * @param invest    the invest
+     * @param poisition the poisition
+     */
     public void createInfromationDialog(ArrayList<InvestStock> invest, int poisition) {
         //RecyclerViewיצירת דיאלוג אשר יראה את פרטי המנייה שנלחצה ב
         InvestStock userItem = invest.get(poisition);

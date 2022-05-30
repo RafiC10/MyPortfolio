@@ -18,11 +18,26 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * The type Register activity.
+ */
 public class RegisterActivity extends AppCompatActivity
 {//מחלקת מסך אשר אחרית על רישום משתמשים חדשים לאפליקציה
+    /**
+     * The User name.
+     */
     EditText user_name;// תיבת טקסט בה היוזר יוצר שם משתמש
+    /**
+     * The Mail.
+     */
     EditText mail;//תיבת טקסט בה היוזר מכניס מייל
+    /**
+     * The Password.
+     */
     EditText password;//תיבת טקסט בה היוזר יוצר סיסמה
+    /**
+     * The Btn finish.
+     */
     Button btnFinish;//כפתור סיום אחרי מילוי הפרטים
     private DatabaseReference myRefToUsers;//הפנייה לדאטה בייס בסיסי של יוזרים על מנת ליצור משתמש חדש
     private FirebaseAuth mAuth;//  ניהול יוזרים (הרשמה התחברות) על מנת ליצור משתמש חדש
@@ -38,7 +53,13 @@ public class RegisterActivity extends AppCompatActivity
             myRefToUsers = FirebaseDatabase.getInstance().getReference("Users");
             mAuth = FirebaseAuth.getInstance();
     }
-            public void giser (View v){//הגבה לכפתור סיום אחרי מילוי הפרטים במידה והכל נכון ותיקני יווצר מתשמש חדש והוא יועבר למסך חשבון
+
+    /**
+     * Giser.
+     *
+     * @param v the v
+     */
+    public void giser (View v){//הגבה לכפתור סיום אחרי מילוי הפרטים במידה והכל נכון ותיקני יווצר מתשמש חדש והוא יועבר למסך חשבון
                 if (btnFinish == v&&password.getText().length()>=6) {//בדיקת שהנתנונים מתאימים
                     mAuth.createUserWithEmailAndPassword(mail.getText().toString(), password.getText().toString())
                             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {//בדיקה ויצירה של משתמש חדש

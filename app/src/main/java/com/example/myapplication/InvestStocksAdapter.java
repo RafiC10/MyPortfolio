@@ -11,13 +11,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+/**
+ * The type Invest stocks adapter.
+ */
 public class InvestStocksAdapter extends RecyclerView.Adapter<InvestStocksAdapter.InvestLookViewHolder> {
     //בנייה וסידור של ה RecyclerView של מניות להשקעה בדף החשבון
     private ArrayList<InvestStock>invest;//מערך המניות להשקעה של המשתמש
     private View.OnClickListener onItemClickListener;//ליסינר ללחיצה על מנת שיהיה ניתן לפתוח דיאלוג מידע
+
+    /**
+     * Instantiates a new Invest stocks adapter.
+     *
+     * @param invest the invest
+     */
     public InvestStocksAdapter(ArrayList<InvestStock> invest){
         this.invest = invest;
     }//גודל
+
+    /**
+     * Sets on item click listener.
+     *
+     * @param onItemClickListener the on item click listener
+     */
     public void setOnItemClickListener(View.OnClickListener onItemClickListener) { this.onItemClickListener =onItemClickListener ; }
     public int getItemCount() { return invest.size(); }
     @NonNull
@@ -43,11 +58,29 @@ public class InvestStocksAdapter extends RecyclerView.Adapter<InvestStocksAdapte
         }
     }
 
+    /**
+     * The type Invest look view holder.
+     */
     public class InvestLookViewHolder extends RecyclerView.ViewHolder{
-        //הגדרת הנתונים של ה RecyclerView ואפשרות ללחיצה עליהם
+        /**
+         * The Name stock.
+         */
+//הגדרת הנתונים של ה RecyclerView ואפשרות ללחיצה עליהם
             public TextView NameStock;//שם מנייה
+        /**
+         * The Price now stock.
+         */
         public TextView PriceNowStock;//שווי מניה נוכחי
+        /**
+         * The Generally chnge stock.
+         */
         public TextView GenerallyChngeStock;//שינוי כללי
+
+        /**
+         * Instantiates a new Invest look view holder.
+         *
+         * @param itemView the item view
+         */
         public InvestLookViewHolder(@NonNull View itemView) {
             super(itemView);
             NameStock=itemView.findViewById(R.id.TvNameStockInRecycler);

@@ -6,9 +6,15 @@ import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.widget.Toast;
 
+/**
+ * The type My receiver.
+ */
 public class MyReceiver extends BroadcastReceiver
 {//יReceiver השולט על כיבוי והדלקה של הוייפי
 
+    /**
+     * The Wifimanager.
+     */
     WifiManager wifimanager;//מידע  על הוויפי
 
     @Override

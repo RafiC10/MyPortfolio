@@ -14,15 +14,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/**
+ * The type Looking stocks adapter.
+ */
 public class LookingStocksAdapter extends RecyclerView.Adapter<LookingStocksAdapter.LLookViewHolder> {
     //בנייה וסידור של ה RecyclerView של מניות להשקעה בדף המניות לצפייה
     private ArrayList<LookingStock> look;//מערך המניות לצפייה של המשתמש
     private View.OnClickListener onItemClickListener;//ליסינר ללחיצה על מנת שיהיה ניתן לפתוח דיאלוג מידע
 
+    /**
+     * Instantiates a new Looking stocks adapter.
+     *
+     * @param look the look
+     */
     public LookingStocksAdapter(ArrayList<LookingStock> look){
         this.look = look;
     }
     public int getItemCount() { return look.size(); }
+
+    /**
+     * Sets on item click listener 1.
+     *
+     * @param onItemClickListener1 the on item click listener 1
+     */
     public void setOnItemClickListener1(View.OnClickListener onItemClickListener1) {
         this.onItemClickListener=onItemClickListener1; }
     @NonNull
@@ -41,11 +55,26 @@ public class LookingStocksAdapter extends RecyclerView.Adapter<LookingStocksAdap
         holder.NameLookStock.setText(currentStock.getName());
         holder.PriceNowLookStock.setText(String.valueOf(currentStock.getPriceNow()));
     }
-    public class LLookViewHolder extends RecyclerView.ViewHolder{
-    //הגדרת הנתונים של ה RecyclerView ואפשרות ללחיצה עליהם
-        public TextView NameLookStock //שם המנייה
-                ,PriceNowLookStock;//מחיר נוכחי
 
+    /**
+     * The type L look view holder.
+     */
+    public class LLookViewHolder extends RecyclerView.ViewHolder{
+        /**
+         * The Name look stock.
+         */
+//הגדרת הנתונים של ה RecyclerView ואפשרות ללחיצה עליהם
+        public TextView NameLookStock //שם המנייה
+                , /**
+         * The Price now look stock.
+         */
+        PriceNowLookStock;//מחיר נוכחי
+
+        /**
+         * Instantiates a new L look view holder.
+         *
+         * @param itemView the item view
+         */
         public LLookViewHolder(@NonNull View itemView) {
             super(itemView);
             NameLookStock =itemView.findViewById(R.id.TvNameStockLook);

@@ -31,19 +31,58 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * The type Look activity.
+ */
 public class LookActivity extends AppCompatActivity implements View.OnClickListener , FirebaseCallback{
+    /**
+     * The On item click listener in look.
+     */
 //מחלקת מסך אשר אחראית על הצגת המניות לצפייהה מעין שילוב של מחלקותPortfolioActivity ן AddActivity בדף זה ניתן גם לראות גם להוסיף וגם לערוך את המניות לצפייה
     View.OnClickListener onItemClickListenerInLook;//ליסינר ללחיצה
+    /**
+     * The Look.
+     */
     ArrayList<LookingStock> look = new ArrayList<>();//יArrayList שבו נשמרים המניות לצפיה של המשתמש
+    /**
+     * The Recycler view of look.
+     */
     RecyclerView recyclerViewOfLook;//יRecyclerView שבו יוצגו המניות לצפייה
+    /**
+     * The Looking stocks adapter.
+     */
     LookingStocksAdapter lookingStocksAdapter;//יAdapter לRecyclerView
+    /**
+     * The Btn check data in look.
+     */
     Button btnCheckDataInLook, //כפתור בדיקת נתונים
-            btnAddToPortfolioInLook;//כפתור הוספת מנייה
+    /**
+     * The Btn add to portfolio in look.
+     */
+    btnAddToPortfolioInLook;//כפתור הוספת מנייה
+    /**
+     * The Name of stock.
+     */
     EditText nameOfStock;//תיבת טקסט בה כותב המשתמש את המנייה אותו רוצה להוסיף
+    /**
+     * The Key of look stock.
+     */
     String keyOfLookStock;//סטרינג של מנייה של מנייה שאני לוחץ עליה על מנת שיהיה אפשר למחוק אותה
+    /**
+     * The Name for service.
+     */
     static String nameForService;//שם מנייה סטטי שנשלח ל Service
+    /**
+     * The Price for service.
+     */
     static Double priceForService;//מחיר מנייה סטטי שנשלח ל Service
+    /**
+     * The Dialog look.
+     */
     Dialog dialogLook;//הדיאלוג של המידע של המנייה
+    /**
+     * The Firebase controller.
+     */
     FirebaseController firebaseController;//הפנייה לfirebaseController על מנת לייבא ולייצא את הנתונים להדאטהבייס
 
     @Override
@@ -120,6 +159,13 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(LookActivity.this, "אתה צריך ללחוץ על בדיקת נתונים", Toast.LENGTH_LONG).show();
         }
     }
+
+    /**
+     * Create infromation dialog.
+     *
+     * @param look      the look
+     * @param poisition the poisition
+     */
     public void createInfromationDialog(ArrayList<LookingStock> look, int poisition) {//יצירת דיאלוג שבו היתן לעדכן את מחיר המנייה ולמחוק אותה
         LookingStock userItem = look.get(poisition);
         keyOfLookStock = userItem.getKey();

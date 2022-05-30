@@ -17,10 +17,32 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+/**
+ * The type Add activity.
+ */
 public class AddActivity extends AppCompatActivity implements View.OnClickListener
 {//מחלקת מסך אשר אחרית על הוספת מניות להשקעה
-    EditText NameOfStock,BuyingPriceOfStock, AmountOfStock, ComissionOfStock;//מילוי פרטי המנייה (שם,מחיר קנייה,כמות,עמלה)
+    /**
+     * The Name of stock.
+     */
+    EditText NameOfStock, /**
+ * The Buying price of stock.
+ */
+BuyingPriceOfStock, /**
+ * The Amount of stock.
+ */
+AmountOfStock, /**
+ * The Comission of stock.
+ */
+ComissionOfStock;//מילוי פרטי המנייה (שם,מחיר קנייה,כמות,עמלה)
+    /**
+     * The Btn check data in add.
+     */
     Button btnCheckDataInAdd;//כפתור בדיקת נתונים
+    /**
+     * The Btn add to portfolio in add.
+     */
     Button btnAddToPortfolioInAdd;//כפתור הוספה
 
 

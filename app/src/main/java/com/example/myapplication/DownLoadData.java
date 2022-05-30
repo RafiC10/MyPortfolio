@@ -12,14 +12,31 @@ import java.net.URLConnection;
 
 import java.net.HttpURLConnection;
 
+/**
+ * The type Down load data.
+ */
 public class DownLoadData extends AsyncTask<String, Integer, String>
 {//מחלקה אשר תפקידה הוא לקבל מאתר אינטרנט מידע גבי מנייה אשר מופיעה בקישור דרכו מועפלת הפנקוציה ,
-        // הפעולה תווודאי שאכן יש מנייה כזאת ותעדכן את מחיר המנייה ותשנה את הערך הבוולאיני של האימות לאמת
+    /**
+     * The constant TheRealPrice.
+     */
+// הפעולה תווודאי שאכן יש מנייה כזאת ותעדכן את מחיר המנייה ותשנה את הערך הבוולאיני של האימות לאמת
         static Double TheRealPrice = -0.2 ;//מחיר המנייה בסטטי על מנת שמחקלות אחרות יוכלו לקבלו
-        static Boolean EveryThingIsFine =false;//ערך בולייאני שמוודא שאכן נלחץ כפתור "בידקת נתונים" ואכן יש מנייה
-        Context context;
+    /**
+     * The Every thing is fine.
+     */
+    static Boolean EveryThingIsFine =false;//ערך בולייאני שמוודא שאכן נלחץ כפתור "בידקת נתונים" ואכן יש מנייה
+    /**
+     * The Context.
+     */
+    Context context;
 
-        public DownLoadData(Context context) {//באני
+    /**
+     * Instantiates a new Down load data.
+     *
+     * @param context the context
+     */
+    public DownLoadData(Context context) {//באני
                 this.context= context;
         }
 

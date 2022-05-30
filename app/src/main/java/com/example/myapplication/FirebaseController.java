@@ -20,22 +20,49 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * The type Firebase controller.
+ */
 public class FirebaseController {
+    /**
+     * The Calculate worth of the stock now.
+     */
     double calculateWorthOfTheStockNow = 0;//משתנה בשביל חישוב שווי תיק
+    /**
+     * The Calculate genral change.
+     */
     double calculateGenralChange = 0;//משתנה בשביל חישוב שנינוי תיק
+    /**
+     * The Context.
+     */
     static Context context;//על מנת לישלוח התראות
     private static FirebaseUser currentUser;//הפנייה לדאטה בייס משתמש נוכחי על מנת להוציא משם את הנתונים שלו
 
+    /**
+     * Instantiates a new Firebase controller.
+     *
+     * @param context the context
+     */
     public FirebaseController(Context context) {
         this.context = context;
     }
 
+    /**
+     * Gets current user.
+     *
+     * @return the current user
+     */
     public static FirebaseUser getCurrentUser() {
         if (currentUser == null)
              currentUser = FirebaseAuth.getInstance().getCurrentUser();
         return currentUser;
     }
 
+    /**
+     * Add to database to look.
+     *
+     * @param nameOfLook the name of look
+     */
     public static void addToDatabaseToLook(String nameOfLook) {//הוספת מנייה לצפייה
 //        הפעולה תקבל שם תיקח את המחיר מהמשתנה הסטטי של מחיר ב DownLoadData ותיצור key למנייה
 //        ותוסיף ל דfirebase ב ToLook
@@ -45,6 +72,15 @@ public class FirebaseController {
         MyRefToStocks.setValue(lookingStock);
         Toast.makeText(context, "עודכן בהצלחה!", Toast.LENGTH_SHORT).show();
     }
+
+    /**
+     * Add to database to invest.
+     *
+     * @param name          the name
+     * @param buyingPricedo the buying pricedo
+     * @param amountdouble  the amountdouble
+     * @param amlado        the amlado
+     */
     public static void addToDatabaseToInvest(String name,Double buyingPricedo,Double amountdouble,Double amlado) {
         //הוספת מנייה השקעה
         //הפעולה תקבל שם,מחיר קנייה,כמות,ועמלה ותיקח את המחיר מהמשתנה הסטטי של מחיר ב DownLoadData ותיצור key למנייה
@@ -55,12 +91,24 @@ public class FirebaseController {
         MyRefToStocks.setValue(investStock);
         Toast.makeText(context, "עודכן בהצלחה!", Toast.LENGTH_SHORT).show();
     }
-     public static void deleteLookStock(String keyOfLookStock) {//מחיקת מנייה לצפייה על ידי יצירת הפנייה לאותו מקום לפי key שהיא מקבלת ומחיקתו
+
+    /**
+     * Delete look stock.
+     *
+     * @param keyOfLookStock the key of look stock
+     */
+    public static void deleteLookStock(String keyOfLookStock) {//מחיקת מנייה לצפייה על ידי יצירת הפנייה לאותו מקום לפי key שהיא מקבלת ומחיקתו
         DatabaseReference refToDelete = FirebaseDatabase.getInstance().getReference("ToLook")
                 .child(getCurrentUser().getUid()).child(String.valueOf(keyOfLookStock));
         refToDelete.removeValue();
         Toast.makeText(context, "נמחק בהצלחה!", Toast.LENGTH_SHORT).show();
     }
+
+    /**
+     * Delete invest stock.
+     *
+     * @param keyOfLookStock the key of look stock
+     */
     public static void deleteInvestStock(String keyOfLookStock) {//מחיקת מנייה להשקעה על ידי יצירת הפנייה לאותו מקום לפי key שהיא מקבלת ומחיקתו
         DatabaseReference refToDelete = FirebaseDatabase.getInstance().getReference("ToInvest")
                 .child(getCurrentUser().getUid()).child(String.valueOf(keyOfLookStock));
@@ -68,6 +116,12 @@ public class FirebaseController {
         Toast.makeText(context, "נמחק בהצלחה!", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Read data look.
+     *
+     * @param firebaseallback the firebaseallback
+     * @param look            the look
+     */
     public void readDataLook(FirebaseCallback firebaseallback,ArrayList<LookingStock> look) {
         //מעבר על מניות להשקעה של משתמש והעברת למערךוסידורם לפי סדר אלפאביתי המערך יועבר למשתמש באמתעות ה ממשק של FirebaseCallback
         FirebaseDatabase.getInstance().getReference("ToLook").child(getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -89,6 +143,13 @@ public class FirebaseController {
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
+
+    /**
+     * Read data invest.
+     *
+     * @param firebaseallback the firebaseallback
+     * @param invest          the invest
+     */
     public void readDataInvest(FirebaseCallback firebaseallback,ArrayList<InvestStock> invest) {
         FirebaseDatabase.getInstance().getReference("ToInvest").child(getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
