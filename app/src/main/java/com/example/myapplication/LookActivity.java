@@ -102,11 +102,12 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
                 RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
                 int poisition = viewHolder.getAdapterPosition();
                 LookingStock userItem = look.get(poisition);
-                keyOfLookStock = userItem.getKey();
-                createInfromationDialog(look, poisition);
-                String ap = "https://financialmodelingprep.com/api/v3/quote-short/" + nameOfStock.getText().toString() + "?apikey=d477f4211cca3f702244eaf9a9539b0d";
+                String ap = "https://financialmodelingprep.com/api/v3/quote-short/" + userItem.getName().toString() + "?apikey=d477f4211cca3f702244eaf9a9539b0d";
                 DownLoadData t = new DownLoadData(LookActivity.this);
                 t.execute(ap.toString());
+                keyOfLookStock = userItem.getKey();
+                createInfromationDialog(look, poisition);
+
             }
         };
     }
@@ -157,6 +158,9 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (btnAddToPortfolioInLook == view && DownLoadData.EveryThingIsFine != true) {//התראה במידה ולא לחץ על בדיקת נתונים
             Toast.makeText(LookActivity.this, "אתה צריך ללחוץ על בדיקת נתונים", Toast.LENGTH_LONG).show();
+        }
+        if (nameOfStock.getText().length()==0){
+            Toast.makeText(LookActivity.this, "צריך להכניס שם מנייה", Toast.LENGTH_LONG).show();
         }
     }
 
