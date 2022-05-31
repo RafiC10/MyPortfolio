@@ -96,6 +96,7 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
         btnCheckDataInLook.setOnClickListener(this);
         firebaseController = new FirebaseController(this);
         firebaseController.readDataLook(this,look);
+        DownLoadData.EveryThingIsFine=false;
 
         onItemClickListenerInLook = new View.OnClickListener() {
             public void onClick(View view) {//תגובה ללחיצה על מנייה ב  כתוצאה מכך יפתח הדיאלוג עם השם של המנייה ושיאל את המשתמש מה לעשות עם המנייה וישלח בקשה לקבלת מחיר המנייה הנוכחית מכיוון שלא ניתן לשנות את שם המנייה
@@ -172,6 +173,7 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void createInfromationDialog(ArrayList<LookingStock> look, int poisition) {//יצירת דיאלוג שבו היתן לעדכן את מחיר המנייה ולמחוק אותה
         LookingStock userItem = look.get(poisition);
+        DownLoadData.EveryThingIsFine=false;
         keyOfLookStock = userItem.getKey();
         dialogLook = new Dialog(this);
         dialogLook.setContentView(R.layout.dialog_look);
@@ -188,7 +190,7 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
                 if (btnDelete==v){//כפתןר אשר שלוח בקשה למחיקת המנייה
                     FirebaseController.deleteLookStock(keyOfLookStock);
                     startActivity(new Intent(LookActivity.this, LookActivity.class));
-
+                    DownLoadData.EveryThingIsFine=false;
                 }
             }
         });
@@ -199,6 +201,7 @@ public class LookActivity extends AppCompatActivity implements View.OnClickListe
                     FirebaseController.deleteLookStock(keyOfLookStock);
                     FirebaseController.addToDatabaseToLook(userItem.getName().toString());
                     startActivity(new Intent(LookActivity.this, LookActivity.class));
+                    DownLoadData.EveryThingIsFine=false;
                 }
             }
         });

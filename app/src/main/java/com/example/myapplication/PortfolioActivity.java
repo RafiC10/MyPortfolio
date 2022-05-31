@@ -115,6 +115,7 @@ public class PortfolioActivity extends AppCompatActivity implements FirebaseCall
         GenralChange = findViewById(R.id.tvChangeGenralChangeInPort2);
         intent = getIntent();
         myReceiver = new MyReceiver();
+        DownLoadData.EveryThingIsFine=false;
         wifimanager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiSwitch = (Switch) findViewById(R.id.wifi_switch);
         wifiSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -186,6 +187,7 @@ public class PortfolioActivity extends AppCompatActivity implements FirebaseCall
         //RecyclerViewיצירת דיאלוג אשר יראה את פרטי המנייה שנלחצה ב
         InvestStock userItem = invest.get(poisition);
         keyOfInvestStock = userItem.getKey();
+        DownLoadData.EveryThingIsFine=false;
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_stock1);
         Button btnCheckDataInD = dialog.findViewById(R.id.btntos);//כפתור בדיקת נתונים
@@ -219,6 +221,7 @@ public class PortfolioActivity extends AppCompatActivity implements FirebaseCall
             public void onClick(View v) {//כפתןר אשר שלוח בקשה למחיקת המנייה
                 FirebaseController.deleteInvestStock(keyOfInvestStock);
                 startActivity(new Intent(PortfolioActivity.this, PortfolioActivity.class));
+                DownLoadData.EveryThingIsFine=false;
             }
         });
             btnSaveInD.setOnClickListener(new View.OnClickListener() {
@@ -228,6 +231,7 @@ public class PortfolioActivity extends AppCompatActivity implements FirebaseCall
                     FirebaseController.deleteInvestStock(keyOfInvestStock);
                     FirebaseController.addToDatabaseToInvest(nameE.getText().toString(), Double.valueOf(priceE.getText().toString()), Double.valueOf(amountE.getText().toString()), Double.valueOf(comissionE.getText().toString()));
                     startActivity(new Intent(PortfolioActivity.this, PortfolioActivity.class));
+                    DownLoadData.EveryThingIsFine=false;
                 }
                 if (btnSaveInD == v && DownLoadData.EveryThingIsFine != true) {
                     //במידה ולא לחץ כל בדיקת נתנונים ישלח התראה שתגיד על כך

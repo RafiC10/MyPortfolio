@@ -59,6 +59,7 @@ ComissionOfStock;//מילוי פרטי המנייה (שם,מחיר קנייה,כ
         btnAddToPortfolioInAdd.setOnClickListener(this);
         btnCheckDataInAdd = (Button) findViewById(R.id.btnCheckDataInAdd);
         btnCheckDataInAdd.setOnClickListener(this);
+        DownLoadData.EveryThingIsFine=false;
     }
     public boolean onCreateOptionsMenu(Menu menu) {//הצגת ה menu
         getMenuInflater().inflate(R.menu.menu1, menu);
@@ -93,7 +94,7 @@ ComissionOfStock;//מילוי פרטי המנייה (שם,מחיר קנייה,כ
         }
         if (btnAddToPortfolioInAdd == view && DownLoadData.EveryThingIsFine!= true) {
             //אם היוזר לחץ על הוספה לפני שלחץ על בדיקת נתונים הוא יקבל על כך התראה
-            Toast.makeText(AddActivity.this, "אתה צריך ללחוץ על אישור", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddActivity.this, "אתה צריך ללחוץ על בדיקת נתונים", Toast.LENGTH_LONG).show();
         }
     }
 
